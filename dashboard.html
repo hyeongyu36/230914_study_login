@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: aquamarine;
+        }
+
+        .wrap {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            width: 38%;
+            padding: 10px;
+            background-color: azure;
+            margin: 0 auto;
+        }
+
+        /* 섹션 스타일 */
+        #login-section,
+        #singup-section,
+        #dashboard-section {
+            text-align: center;
+            margin-bottom: 20px;
+
+        }
+
+        #singup-section {
+            width:40%;
+            margin-left: 20px;
+        }
+
+        #dashboard-section {
+            width: 70%;
+        }
+
+        /* 버튼 */
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #logout-button {
+            background-color: #dc3545;
+            float: left;
+        }
+
+        /* 사용자 이름 디스플레이 스타일 */
+        #username-display {
+            font-size: 20px;
+            color: #dc3545;
+            width: 60%;
+            margin-top: 8px;
+            margin-right: 25px;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="singup-section">
+            <button id="singup-botton">회원가입</button>
+        </div>
+        <div id="login-section">
+            <button id="login-button">로그인</button>
+        </div>
+        <div id="dashboard-section" style="display:none;">
+            <div id="username-display"></div>
+            <button id="logout-button">로그아웃</button>
+        </div>
+    </div>
+    <script>
+        // 페이지가 로드될 때 초기 대시보드 화면을 표시
+        window.onload = function () {
+            showInitialDashboard();
+        };
+        // 로그인 버튼 클릭시 호출되는 함수
+        document.getElementById("login-button").addEventListener("click", function () {
+            // 로그인 페이지로 이동
+            window.location.href = "login.html";
+        })
+        document.getElementById("singup-botton").addEventListener("click", function () {
+            // 로그인 페이지로 이동
+            window.location.href = "signup.html";
+        })
+        document.getElementById("logout-button").addEventListener("click", function () {
+            // 로그아웃 로직을 처리하고 다시 초기 화면을 표시합니다
+            document.getElementById("login-section").style.display = "block";
+            document.getElementById("dashboard-section").style.display = "none";
+
+
+        });
+        // 대시보드 화면 표시 함수
+        function showInitialDashboard() {
+            //현재페이지의 URL에서 쿼리 문자열을 가져와 URLSearchParams()객체를 생성합니다.
+            var params = new URLSearchParams(window.location.search);
+            var username = params.get("username");
+            if (username) {
+                document.getElementById("login-section").style.display = "none";
+                document.getElementById("dashboard-section").style.display = "block";
+                document.getElementById("username-display").textContent = `안녕하세요,${username}님!`
+                // 로그아웃 버튼
+                document.getElementById("logout-button").style.display = "block"
+            } else {
+                document.getElementById("login-section").style.display = "block";
+                document.getElementById("dashboard-section").style.display = "none";
+                document.getElementById("logout-button").style.display = "none";
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>

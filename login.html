@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>Login</h1>
+        <form id="login-form">
+            <label for="username">사용자 이름:</label>
+            <input type="text" id="username" name="username" required>
+            <br />
+            <label for="password">비밀번호:</label>
+            <input type="password" id="password" name="password" required>
+            <br />
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <script>
+        const loginForm = document.getElementById("login-form");
+        loginForm.addEventListener("submit", function (e) {
+            e.preventDefault()
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const authenticatedUser = users.find(
+                (user) => user.username === username && user.password === password
+            );
+            if (authenticatedUser) {
+                alert("로그인이 성공하였습니다.");
+                // encodeURIComponent(username)사용자기름에 공백이나 특수 문자와 같은 문자가 포함될수 있으니 
+                window.location.href = "dashboard.html?username=" + encodeURIComponent(username);
+            } else {
+                alert("로그인 정보가 올바르지 않습니다. 다시 시도해주세요.");
+                loginForm.reset();
+            }
+        });
+    </script>
+</body>
+
+</html>

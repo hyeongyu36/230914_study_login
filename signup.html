@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>회원가입</h1>
+        <form id="signup-form">
+            <label for="signup-username">사용자 이름:</label>
+            <input type="text" id="signup-username" name="signup-username" required>
+            <br />
+            <label for="signup-password">비밀번호:</label>
+            <input type="password" id="signup-password" name="signup-password" required>
+            <br />
+            <button type="submit">가입하기</button>
+        </form>
+    </div>
+    <script>
+        const sigupForm = document.getElementById("signup-form");
+        sigupForm.addEventListener("submit", function (e) {
+            // 이벤트 객체(e)의 preventDefault() 메서드를 호출해서 기본 제출 동작을 막습니다.
+            // 페이지가 새로고침되는것을 방지한다
+            e.preventDefault()
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
+            // 로컬스토리지를 사용하여 저장합니다
+            // 사용자명(username)과 비밀번호(password)를 이용하여 새로운 사용자(newUser)객체 생성
+            const newUser = {
+                username: username,
+                password: password,
+            }
+
+            // 로컬스토리지에 사용자 정보를 저장합니다.
+            // 로컬스도리지에 저장된 사용자 정보를 가져오기 위해 localStorage.getItem("users")를 사용합니다.
+            // 만약에 사용자 정보가 없다면 빈 배열([])을 기본값으로 사용
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            // 새로운 사용자 객체 (newUser)를 이전 사용자 정보 배열(users)에 추가 
+            users.push(newUser);
+            // 사용자 정보 배열을 JSON형식으로 문자열화 하고 ,이를  로컬 스토리지에 "users"라는 키로 저장
+            localStorage.setItem("users", JSON.stringify(users));
+            alert("가입이 완로 되었습니다. 로그인 페이지로 이동합니다.")
+            window.location.href = "login.html"
+
+        })
+    </script>
+</body>
+
+</html>
